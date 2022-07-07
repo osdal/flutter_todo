@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -14,16 +13,9 @@ class _HomeState extends State<Home> {
   String? _userTodo;
   List todoList = [];
 
-  void initFirebase() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
-  }
-
   @override
   void initState() {
     super.initState();
-
-    initFirebase();
 
     todoList.addAll(['Buy milk', 'Wash dishes', 'Купить картошку']);
   }
@@ -37,10 +29,13 @@ class _HomeState extends State<Home> {
         ),
         body: Row(
           children: [
-            ElevatedButton(onPressed: () {
-              Navigator.pop(context);
-              Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-            }, child: Text('На главную')),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/', (route) => false);
+                },
+                child: Text('На главную')),
             Padding(padding: EdgeInsets.only(left: 15)),
             Text(('Наше простое меню'))
           ],
@@ -63,7 +58,7 @@ class _HomeState extends State<Home> {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('items').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if(!snapshot.hasData) return Text(('Нет записей'));
+          if (!snapshot.hasData) return Text(('Нет записей'));
           return ListView.builder(
               itemCount: snapshot.data?.docs.length,
               itemBuilder: (BuildContext context, int index) {
@@ -78,13 +73,19 @@ class _HomeState extends State<Home> {
                           color: Colors.deepOrange,
                         ),
                         onPressed: () {
-                          FirebaseFirestore.instance.collection('items').doc(snapshot.data!.docs[index].id).delete();
+                          FirebaseFirestore.instance
+                              .collection('items')
+                              .doc(snapshot.data!.docs[index].id)
+                              .delete();
                         },
                       ),
                     ),
                   ),
                   onDismissed: (direction) {
-                    FirebaseFirestore.instance.collection('items').doc(snapshot.data!.docs[index].id).delete();
+                    FirebaseFirestore.instance
+                        .collection('items')
+                        .doc(snapshot.data!.docs[index].id)
+                        .delete();
                     // if(direction== DismissDirection.endToStart)
                   },
                 );
@@ -107,7 +108,9 @@ class _HomeState extends State<Home> {
                   actions: [
                     ElevatedButton(
                         onPressed: () {
-                          FirebaseFirestore.instance.collection('items').add({'item':_userTodo});
+                          FirebaseFirestore.instance
+                              .collection('items')
+                              .add({'item': _userTodo});
                           Navigator.of(context).pop();
                         },
                         child: Text('Добавить'))

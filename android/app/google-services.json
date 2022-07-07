@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:138923490333:android:a3ce157514c78b9e609af4",
         "android_client_info": {
-          "package_name": "com.example.todolist"
+          "package_name": "osdal.test.todolist"
         }
       },
       "oauth_client": [
