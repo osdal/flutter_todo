@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -29,11 +28,12 @@ class _HomeState extends State<Home> {
         ),
         body: Row(
           children: [
+            // LoginWidget(),
             ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
                   Navigator.pushNamedAndRemoveUntil(
-                      context, '/', (route) => false);
+                      context, '/main', (route) => false);
                 },
                 child: Text('На главную')),
             Padding(padding: EdgeInsets.only(left: 15)),
