@@ -1,8 +1,7 @@
-// @dart=2.9
-// import 'dart:js';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todolist/bloc/auth_cubit.dart';
 import 'firebase_options.dart';
-
 
 import 'package:flutter/material.dart';
 import 'pages/home.dart';
@@ -17,17 +16,20 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MaterialApp(
-    theme: ThemeData(
-        // primaryColor: Colors.red,
-        ),
-    initialRoute: '/',
-    routes: {
-      // '/auth': (context) => Auth(),
-      '/': (context) => MainScreen(),
-      '/todo': (context) => Home(),
-      SignUpScreen.id: (context) => SignUpScreen(),
-      LogInScreen.id: (context) => LogInScreen(),
-    },
+  runApp(BlocProvider<AuthCubit>(
+    create: (context) => AuthCubit(),
+    child: MaterialApp(
+      theme: ThemeData(
+          // primaryColor: Colors.red,
+          ),
+      initialRoute: '/',
+      routes: {
+        // '/auth': (context) => Auth(),
+        '/': (context) => MainScreen(),
+        '/todo': (context) => Home(),
+        SignUpScreen.id: (context) => SignUpScreen(),
+        LogInScreen.id: (context) => LogInScreen(),
+      },
+    ),
   ));
 }
